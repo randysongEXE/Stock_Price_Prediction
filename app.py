@@ -3,10 +3,10 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import yfinance as yf
 from sklearn.preprocessing import MinMaxScaler
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import LSTM, Dropout, Dense
-from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
-from tensorflow.keras.optimizers import Adam
+from tensorflow.python.keras.models import Sequential
+from tensorflow.python.keras.layers import LSTM, Dropout, Dense
+from tensorflow.python.keras.callbacks import EarlyStopping, ModelCheckpoint
+from tensorflow.python.keras.optimizers import Adam
 
 # Global Variables
 TICKER_SYMBOL = 'GOOGL'
