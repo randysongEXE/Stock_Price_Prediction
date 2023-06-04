@@ -48,6 +48,8 @@ Here are the predictions for CocaCola, Microsoft, and Nvidia, respectively. (201
 
 ![image](https://github.com/randysongEXE/Stock_Price_Prediction/assets/127687854/fb36f1fb-49cc-455e-867f-5cb6f26b91a1)
 ![image](https://github.com/randysongEXE/Stock_Price_Prediction/assets/127687854/c36e9ffc-1636-4297-912c-76b8dfdbf012)
+![image](https://github.com/randysongEXE/Stock_Price_Prediction/assets/127687854/2a15783c-8ef9-4749-b768-7f2295cba38b)
+
 
 
 
