@@ -46,6 +46,10 @@ This is likely due to package differences in the Python environment, where diffe
 
 Here are the predictions for CocaCola, Microsoft, and Nvidia.
 
+CocaCola:
+![image](https://github.com/randysongEXE/Stock_Price_Prediction/assets/127687854/fb36f1fb-49cc-455e-867f-5cb6f26b91a1)
+
+
 
 
 
