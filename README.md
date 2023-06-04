@@ -44,7 +44,7 @@ Interestingly enough, the 'app' model, with negligable differences, has a slight
 
 This is likely due to package differences in the Python environment, where different versions of tensorflow may cause different outputs.
 
-Here are the predictions for CocaCola, Microsoft, and Nvidia.
+Here are the predictions for CocaCola, Microsoft, and Nvidia, respectively.
 
 ![image](https://github.com/randysongEXE/Stock_Price_Prediction/assets/127687854/fb36f1fb-49cc-455e-867f-5cb6f26b91a1)
 
