@@ -40,7 +40,8 @@ The 'app2.0' model was tested with the Google Stock data, or 'GOOGL'. Here is th
 The model is fairly accurate - however, it should not be used to make actual financial decisions, as it does not take into account risk management and is susceptible to overfitting (a problem in machine learning where the training data may not accurately reflect real-world results). 
 
 Interestingly enough, the 'app' model, with negligable differences, has a slight overprediction as shown below:
-![image](https://github.com/randysongEXE/Stock_Price_Prediction/assets/127687854/1c69cadb-e548-4726-ac8f-bab05fed1eed)
+![image](https://github.com/randysongEXE/Stock_Price_Prediction/assets/127687854/5a120395-4f5b-4fa1-b156-be7347fd6fa8)
+
 
 This is likely due to package differences in the Python environment, where different versions of tensorflow may cause different outputs.
 
