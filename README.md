@@ -3,7 +3,7 @@ Stock Price Predictor using LSTM
 This project aims to predict stock prices using a machine learning model, specifically, a Long Short-Term Memory (LSTM) model. The model is trained on historical stock price data fetched using the Yahoo Finance API (yfinance). The implementation is in Python and uses libraries such as tensorflow, pandas, numpy, matplotlib and sklearn.
 
 
-Prerequisites
+Prerequisites:
 You will need to have the following packages installed:
 - numpy
 - pandas
@@ -21,10 +21,10 @@ cd <repo_name>
 python3 main.py
 Replace <repo_link> with the URL of your GitHub repository and <repo_name> with the name of the directory created when you cloned the repository.
 
-Functionality
+Functionality:
 The script fetches historical data for a specific ticker symbol from Yahoo Finance, preprocesses the data, and uses it to train an LSTM model. The model then predicts the stock prices for the coming days. The actual and predicted prices are visualized using matplotlib.
 
-Configuration
+Configuration:
 You can configure the model and prediction by modifying the following global variables in main.py:
 
 - TICKER_SYMBOL: the ticker symbol of the stock you want to predict.
