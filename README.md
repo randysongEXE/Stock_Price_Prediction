@@ -22,7 +22,7 @@ python3 main.py
 Replace <repo_link> with the URL of your GitHub repository and <repo_name> with the name of the directory created when you cloned the repository.
 
 Functionality:
-The script fetches historical data for a specific ticker symbol from Yahoo Finance, preprocesses the data, and uses it to train an LSTM model. The model then predicts the stock prices for the coming days. The actual and predicted prices are visualized using matplotlib.
+The script fetches historical data for a specific ticker symbol from Yahoo Finance, preprocesses the data, and uses it to train an LSTM model. The model then predicts the stock prices for the coming days. The actual and predicted prices are visualized using matplotlib. The final graph gives the time in trading days, and it is through the period 2014-2023. However, this can be changed at the user's discretion.
 
 Configuration:
 You can configure the model and prediction by modifying the following global variables in main.py:
@@ -41,6 +41,10 @@ The model is fairly accurate - however, it should not be used to make actual fin
 
 Interestingly enough, the 'app' model, with negligable differences, has a slight overprediction as shown below:
 ![image](https://github.com/randysongEXE/Stock_Price_Prediction/assets/127687854/1c69cadb-e548-4726-ac8f-bab05fed1eed)
+
+This is likely due to package differences in the Python environment, where different versions of tensorflow may cause different outputs.
+
+Here are the predictions for CocaCola, Microsoft, and Nvidia.
 
 
 
