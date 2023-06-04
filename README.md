@@ -34,6 +34,8 @@ You can configure the model and prediction by modifying the following global var
 
 Results
 ---------
+The model was tested with the Google Stock data, or 'GOOGL'. Here is the generated model:
+![image](https://github.com/randysongEXE/Stock_Price_Prediction/assets/127687854/a12cace8-907d-44d2-97bd-43deab43ec46)
 
 
 
