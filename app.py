@@ -2,70 +2,76 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 import yfinance as yf
-
 from sklearn.preprocessing import MinMaxScaler
-from tensorflow.python.keras.models import Sequential
-from tensorflow.python.keras.layers import LSTM, Dropout, Dense
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import LSTM, Dropout, Dense
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
+from tensorflow.keras.optimizers import Adam
 
-# Fetch data
-ticker_symbol = 'GOOGL'
-ticker_data = yf.Ticker(ticker_symbol)
-data = ticker_data.history(period='1d', start='2014-1-1', end='2023-1-1')
+# Global Variables
+TICKER_SYMBOL = 'GOOGL'
+START_DATE = '2014-1-1'
+END_DATE = '2023-1-1'
+PREDICTION_DAYS = 60
+BATCH_SIZE = 32
+EPOCHS = 25
+LEARNING_RATE = 0.001
 
-# Preprocess data
-scaler = MinMaxScaler(feature_range=(0, 1))
-scaled_data = scaler.fit_transform(data['Close'].values.reshape(-1, 1))
+def fetch_data(ticker_symbol):
+    ticker_data = yf.Ticker(ticker_symbol)
+    return ticker_data.history(period='1d', start=START_DATE, end=END_DATE)
 
-prediction_days = 60
-x_train = []
-y_train = []
+def preprocess_data(data):
+    scaler = MinMaxScaler(feature_range=(0, 1))
+    scaled_data = scaler.fit_transform(data['Close'].values.reshape(-1, 1))
+    return scaled_data, scaler
 
-for x in range(prediction_days, len(scaled_data)):
-    x_train.append(scaled_data[x - prediction_days:x, 0])
-    y_train.append(scaled_data[x, 0])
+def create_sequences(data, days):
+    sequences = np.zeros((data.shape[0] - days, days))
+    next_day_close_values = np.zeros((data.shape[0] - days))
+    for i in range(days, data.shape[0]):
+        sequences[i - days] = data[i - days:i].T
+        next_day_close_values[i - days] = data[i]
+    return np.expand_dims(sequences, -1), next_day_close_values
 
-x_train, y_train = np.array(x_train), np.array(y_train)
-x_train = np.reshape(x_train, (x_train.shape[0], x_train.shape[1], 1))
+def create_model(input_shape):
+    model = Sequential()
+    model.add(LSTM(units=50, return_sequences=True, input_shape=input_shape))
+    model.add(Dropout(0.2))
+    model.add(LSTM(units=50, return_sequences=True))
+    model.add(Dropout(0.2))
+    model.add(LSTM(units=50))
+    model.add(Dropout(0.2))
+    model.add(Dense(units=1))
+    optimizer = Adam(learning_rate=LEARNING_RATE)
+    model.compile(optimizer=optimizer, loss='mean_squared_error')
+    return model
 
-# Build model
-model = Sequential()
-model.add(LSTM(units=50, return_sequences=True, input_shape=(x_train.shape[1], 1)))
-model.add(Dropout(0.2))
-model.add(LSTM(units=50, return_sequences=True))
-model.add(Dropout(0.2))
-model.add(LSTM(units=50))
-model.add(Dropout(0.2))
-model.add(Dense(units=1))
+def train_model(model, x_train, y_train):
+    es = EarlyStopping(monitor='val_loss', mode='min', verbose=1, patience=10)
+    mc = ModelCheckpoint('best_model.h5', monitor='val_loss', mode='min', save_best_only=True)
+    history = model.fit(x_train, y_train, epochs=EPOCHS, batch_size=BATCH_SIZE, callbacks=[es, mc])
+    return model, history
 
-model.compile(optimizer='adam', loss='mean_squared_error')
-model.fit(x_train, y_train, epochs=25, batch_size=32)
+def make_predictions(model, data):
+    return model.predict(data)
 
-# Load test data
-test_data = ticker_data.history(period='1d', start='2020-1-1', end='2023-6-3')
-actual_prices = test_data['Close'].values
-total_dataset = pd.concat((data['Close'], test_data['Close']), axis=0)
+def main():
+    data = fetch_data(TICKER_SYMBOL)
+    scaled_data, scaler = preprocess_data(data)
+    x_train, y_train = create_sequences(scaled_data, PREDICTION_DAYS)
+    model = create_model((x_train.shape[1], 1))
+    model, history = train_model(model, x_train, y_train)
+    predictions = make_predictions(model, x_train)
+    predictions = scaler.inverse_transform(predictions)
 
-model_inputs = total_dataset[len(total_dataset) - len(test_data) - prediction_days:].values
-model_inputs = model_inputs.reshape(-1, 1)
-model_inputs = scaler.transform(model_inputs)
+    plt.plot(data['Close'].values, color="black", label=f"Actual {TICKER_SYMBOL} Price")
+    plt.plot(np.arange(PREDICTION_DAYS, PREDICTION_DAYS + len(predictions)), predictions, color="red", label=f"Predicted {TICKER_SYMBOL} Price")
+    plt.title(f"{TICKER_SYMBOL} Share Price Prediction")
+    plt.xlabel('Time')
+    plt.ylabel(f'{TICKER_SYMBOL} Share Price')
+    plt.legend()
+    plt.show()
 
-# Make predictions
-x_test = []
-
-for x in range(prediction_days, len(model_inputs)):
-    x_test.append(model_inputs[x - prediction_days:x, 0])
-
-x_test = np.array(x_test)
-x_test = np.reshape(x_test, (x_test.shape[0], x_test.shape[1], 1))
-
-predicted_prices = model.predict(x_test)
-predicted_prices = scaler.inverse_transform(predicted_prices)
-
-# Plot
-plt.plot(actual_prices, color="black", label=f"Actual {ticker_symbol} Price")
-plt.plot(predicted_prices, color="red", label=f"Predicted {ticker_symbol} Price")
-plt.title(f"{ticker_symbol} Share Price Prediction")
-plt.xlabel('Time')
-plt.ylabel(f'{ticker_symbol} Share Price')
-plt.legend()
-plt.show()
+if __name__ == "__main__":
+    main()
