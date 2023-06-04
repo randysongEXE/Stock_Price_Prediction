@@ -44,6 +44,8 @@ Interestingly enough, the 'app' model, with negligable differences, has a slight
 
 This is likely due to package differences in the Python environment, where different versions of tensorflow may cause different outputs.
 
+
+
 Other Predictions
 -------------
 Here are the predictions for CocaCola, Microsoft, and Nvidia, respectively. (2014-2023)
