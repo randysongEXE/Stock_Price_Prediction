@@ -34,8 +34,14 @@ You can configure the model and prediction by modifying the following global var
 
 Results
 ---------
-The model was tested with the Google Stock data, or 'GOOGL'. Here is the generated model:
+The 'app2.0' model was tested with the Google Stock data, or 'GOOGL'. Here is the generated model:
 ![image](https://github.com/randysongEXE/Stock_Price_Prediction/assets/127687854/a12cace8-907d-44d2-97bd-43deab43ec46)
+
+The model is fairly accurate - however, it should not be used to make actual financial decisions, as it does not take into account risk management and is susceptible to overfitting (a problem in machine learning where the training data may not accurately reflect real-world results). 
+
+Interestingly enough, the 'app' model, with negligable differences, has a slight overprediction as shown below:
+![image](https://github.com/randysongEXE/Stock_Price_Prediction/assets/127687854/1c69cadb-e548-4726-ac8f-bab05fed1eed)
+
 
 
 
