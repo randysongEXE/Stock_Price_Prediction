@@ -32,5 +32,8 @@ You can configure the model and prediction by modifying the following global var
 - END_DATE: the end date for the historical data.
 - PREDICTION_DAYS: the number of days to use for each prediction.
 
+Results
+---------
+
 
 
